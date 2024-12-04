@@ -1,0 +1,35 @@
+-- Create the function to calculate the area of a rectangle
+CREATE OR REPLACE FUNCTION calculate_area (length IN NUMBER, width IN NUMBER) 
+RETURN NUMBER IS
+  area NUMBER;
+BEGIN
+  -- Calculate the area of the rectangle
+  area := length * width;
+  
+  -- Return the calculated area
+  RETURN area;
+END;
+/
+ 
+-- Anonymous PL/SQL block to call the function
+DECLARE
+  -- Declare variables for length, width, and area
+  length NUMBER;
+  width NUMBER;
+  area NUMBER;
+BEGIN
+  -- Assign values to the length and width
+  length := 5; -- Example length
+  width := 3;  -- Example width
+  
+  -- Call the function and store the result in the area variable
+  area := calculate_area(length, width);
+  
+  -- Output the result
+  DBMS_OUTPUT.PUT_LINE('The area of the rectangle is: ' || area || ' square units.');
+END;
+/
+
+Output:
+
+The area of the rectangle is: 15 square units.

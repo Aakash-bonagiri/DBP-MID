@@ -1,0 +1,33 @@
+-- Create the table with two columns
+CREATE TABLE sample (
+    col1 INT,
+    col2 VARCHAR2(50)
+);
+
+CREATE OR REPLACE PROCEDURE insert_tuple(i IN INT) IS
+BEGIN
+    -- Insert the tuple (i, 'xxx') into the table
+    INSERT INTO sample (col1, col2)
+    VALUES (i, 'xxx');
+
+    -- Commit the transaction to save the data
+    COMMIT;
+
+    -- Output message to indicate the insertion was successful
+    DBMS_OUTPUT.PUT_LINE('Tuple (' || i || ', ''xxx'') inserted successfully.');
+END;
+/
+
+-- Execute the procedure with an integer value (e.g., 5)
+EXEC insert_tuple(5);
+
+-- Verify the contents of your_table
+SELECT * FROM sample;
+
+Output:
+
+Tuple (5, 'xxx') inserted successfully.
+
+      COL1 COL2
+---------- --------------------------------------------------
+	 5 xxx

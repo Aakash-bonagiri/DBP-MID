@@ -1,0 +1,66 @@
+-- Create employee table
+CREATE TABLE employee (
+    empno INT PRIMARY KEY,
+    name VARCHAR2(100),
+    salary NUMBER(10, 2),
+    designation VARCHAR2(50),
+    deptid INT
+);
+
+
+-- Insert sample rows into employee table
+INSERT INTO employee (empno, name, salary, designation, deptid) VALUES (1, 'John Doe', 80000, 'Manager', 10);
+INSERT INTO employee (empno, name, salary, designation, deptid) VALUES (2, 'Jane Smith', 95000, 'Engineer', 20);
+INSERT INTO employee (empno, name, salary, designation, deptid) VALUES (3, 'Alice Johnson', 120000, 'Director', 10);
+INSERT INTO employee (empno, name, salary, designation, deptid) VALUES (4, 'Bob Brown', 75000, 'Analyst', 30);
+INSERT INTO employee (empno, name, salary, designation, deptid) VALUES (5, 'Charlie Davis', 110000, 'Developer', 20);
+INSERT INTO employee (empno, name, salary, designation, deptid) VALUES (6, 'Eve White', 130000, 'Manager', 10);
+INSERT INTO employee (empno, name, salary, designation, deptid) VALUES (7, 'Grace Harris', 70000, 'Analyst', 20);
+INSERT INTO employee (empno, name, salary, designation, deptid) VALUES (8, 'Frank Clark', 85000, 'Technician', 30);
+INSERT INTO employee (empno, name, salary, designation, deptid) VALUES (9, 'Helen Adams', 105000, 'Consultant', 20);
+INSERT INTO employee (empno, name, salary, designation, deptid) VALUES (10, 'Ivy Lewis', 95000, 'Developer', 10);
+
+
+DECLARE
+    -- Cursor to fetch the top 5 highest-paid employees
+    CURSOR highest_paid_employees IS
+        SELECT empno, name, salary, designation, deptid
+        FROM employee
+        ORDER BY salary DESC
+        FETCH FIRST 5 ROWS ONLY;
+
+    -- Declare variables to hold the employee data
+    v_empno employee.empno%TYPE;
+    v_name employee.name%TYPE;
+    v_salary employee.salary%TYPE;
+    v_designation employee.designation%TYPE;
+    v_deptid employee.deptid%TYPE;
+BEGIN
+    -- Open the cursor
+    OPEN highest_paid_employees;
+
+    -- Fetch and display the top 5 highest-paid employees
+    LOOP
+        FETCH highest_paid_employees INTO v_empno, v_name, v_salary, v_designation, v_deptid;
+
+        EXIT WHEN highest_paid_employees%NOTFOUND;  -- Exit when no more rows
+
+        -- Output employee data
+        DBMS_OUTPUT.PUT_LINE('Empno: ' || v_empno || ', Name: ' || v_name || 
+                             ', Salary: ' || v_salary || ', Designation: ' || v_designation || 
+                             ', Deptid: ' || v_deptid);
+    END LOOP;
+
+    -- Close the cursor
+    CLOSE highest_paid_employees;
+END;
+/
+
+Output:
+
+Empno: 6, Name: Eve White, Salary: 130000, Designation: Manager, Deptid: 10
+Empno: 3, Name: Alice Johnson, Salary: 120000, Designation: Director, Deptid: 10
+Empno: 5, Name: Charlie Davis, Salary: 110000, Designation: Developer, Deptid:
+20
+Empno: 9, Name: Helen Adams, Salary: 105000, Designation: Consultant, Deptid: 20
+Empno: 2, Name: Jane Smith, Salary: 95000, Designation: Engineer, Deptid: 20

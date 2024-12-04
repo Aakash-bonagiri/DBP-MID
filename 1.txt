@@ -1,0 +1,48 @@
+
+-- Create the employees table
+CREATE TABLE employees (
+    employee_id INT PRIMARY KEY,
+    employee_name VARCHAR2(50)
+);
+
+
+DECLARE
+    -- Declare a variable for the employee name
+    v_employee_name VARCHAR2(50);
+BEGIN
+    -- FOR loop to insert 10 rows
+    FOR i IN 1..10 LOOP
+        -- Assign a dynamic employee name using the loop variable
+        v_employee_name := 'Employee_' || i;
+
+        -- Insert the row into the employees table
+        INSERT INTO employees (employee_id, employee_name)
+        VALUES (i, v_employee_name);
+
+        -- Optionally, you can commit the transaction here if needed
+        -- COMMIT; -- Uncomment if you want to commit after each insertion
+    END LOOP;
+
+    -- Output a message indicating the rows have been inserted
+    DBMS_OUTPUT.PUT_LINE('10 rows have been inserted successfully.');
+END;
+/
+
+select * from employees
+
+Output:
+
+10 rows have been inserted successfully.
+
+EMPLOYEE_ID EMPLOYEE_NAME
+----------- --------------------------------------------------
+	  1 Employee_1
+	  2 Employee_2
+	  3 Employee_3
+	  4 Employee_4
+	  5 Employee_5
+	  6 Employee_6
+	  7 Employee_7
+	  8 Employee_8
+	  9 Employee_9
+	 10 Employee_10
