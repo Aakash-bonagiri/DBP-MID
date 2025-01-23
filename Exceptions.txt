@@ -1,0 +1,53 @@
+DECLARE
+  -- Declare a user-defined exception
+  e_invalid_age EXCEPTION;
+
+  -- Declare a variable for age
+  v_age NUMBER := -5;  -- Example of invalid age
+  
+BEGIN
+  -- Check if the age is valid
+  IF v_age < 0 THEN
+    -- Raise the user-defined exception if age is invalid
+    RAISE e_invalid_age;
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('Age is valid: ' || v_age);
+  END IF;
+
+EXCEPTION
+  -- Handle the user-defined exception
+  WHEN e_invalid_age THEN
+    DBMS_OUTPUT.PUT_LINE('Error: Age cannot be negative!');
+END;
+/
+
+Output:
+
+Error: Age cannot be negative!
+
+DECLARE
+  -- Declare variables
+  v_num1 NUMBER := 10;
+  v_num2 NUMBER := 0;  -- This will cause a division by zero error
+  v_result NUMBER;
+BEGIN
+  -- Try to perform division
+  v_result := v_num1 / v_num2;
+
+  -- Display result (this will not execute because of the error)
+  DBMS_OUTPUT.PUT_LINE('Result: ' || v_result);
+  
+EXCEPTION
+  -- Handle division by zero error
+  WHEN ZERO_DIVIDE THEN
+    DBMS_OUTPUT.PUT_LINE('Error: Division by zero!');
+    
+  -- Catch any other errors
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('An unexpected error occurred!');
+END;
+/
+
+Output:
+
+Error: Division by zero!
