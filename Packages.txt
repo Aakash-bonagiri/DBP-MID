@@ -1,0 +1,47 @@
+-- Create the package specification
+CREATE OR REPLACE PACKAGE employee_pkg AS
+  -- Declare a constant
+  c_bonus_percentage CONSTANT NUMBER := 0.10; -- 10% bonus
+
+  -- Declare a function to calculate the total salary
+  FUNCTION calculate_total_salary(p_basic_salary IN NUMBER) RETURN NUMBER;
+
+  -- Declare a procedure to print employee salary details
+  PROCEDURE print_salary_details(p_employee_name IN VARCHAR2, p_basic_salary IN NUMBER);
+END employee_pkg;
+/
+-- Create the package body
+CREATE OR REPLACE PACKAGE BODY employee_pkg AS
+  -- Implement the function to calculate total salary
+  FUNCTION calculate_total_salary(p_basic_salary IN NUMBER) RETURN NUMBER IS
+    v_total_salary NUMBER;
+  BEGIN
+    -- Calculate total salary (basic salary + bonus)
+    v_total_salary := p_basic_salary + (p_basic_salary * c_bonus_percentage);
+    RETURN v_total_salary;
+  END calculate_total_salary;
+
+  -- Implement the procedure to print salary details
+  PROCEDURE print_salary_details(p_employee_name IN VARCHAR2, p_basic_salary IN NUMBER) IS
+    v_total_salary NUMBER;
+  BEGIN
+    -- Calculate total salary using the function
+    v_total_salary := calculate_total_salary(p_basic_salary);
+    
+    -- Print the salary details
+    DBMS_OUTPUT.PUT_LINE('Employee Name: ' || p_employee_name);
+    DBMS_OUTPUT.PUT_LINE('Basic Salary: ' || p_basic_salary);
+    DBMS_OUTPUT.PUT_LINE('Total Salary (with bonus): ' || v_total_salary);
+  END print_salary_details;
+END employee_pkg;
+/
+BEGIN
+  -- Calling the procedure from the package
+  employee_pkg.print_salary_details('John Doe', 5000);
+END;
+/
+Output:
+
+Employee Name: John Doe
+Basic Salary: 5000
+Total Salary (with bonus): 5500

@@ -1,0 +1,23 @@
+CREATE TABLE users (
+  user_id      NUMBER PRIMARY KEY,
+  user_name    VARCHAR2(50),
+  email        VARCHAR2(100),
+  created_at   DATE
+);
+CREATE OR REPLACE TRIGGER trg_set_created_at
+BEFORE INSERT ON users
+FOR EACH ROW
+BEGIN
+  -- Automatically set the created_at column to the current date
+  :NEW.created_at := SYSDATE;
+END;
+/
+INSERT INTO users (user_id, user_name, email)
+VALUES (1, 'John Doe', 'johndoe@example.com');
+SELECT * FROM users;
+
+Output
+
+USER_ID | USER_NAME  | EMAIL                    | CREATED_AT
+--------------------------------------------------------------
+1       | John Doe   | johndoe@example.com      | 22-JAN-25 10:00:00

@@ -1,0 +1,19 @@
+CREATE OR REPLACE PROCEDURE calculate_rectangle_area(length IN NUMBER, width IN NUMBER) IS
+  area NUMBER;
+BEGIN
+  -- Calculate the area of the rectangle
+  area := length * width;
+
+  -- Output the area
+  DBMS_OUTPUT.PUT_LINE('The area of the rectangle is: ' || area);
+END calculate_rectangle_area;
+/
+BEGIN
+  -- Call the procedure with length 5 and width 10
+  calculate_rectangle_area(5, 10);
+END;
+/
+
+Output:
+
+The area of the rectangle is: 50
